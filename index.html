@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1:1 café</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-bg: #ffffff;
+      --text-dark: #111;
+      --text-light: #666;
+      --accent-pink: #f5c6da;
+      --gray-light: #f4f4f4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--main-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 100vh;
+      background-color: var(--main-bg);
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 500;
+      letter-spacing: -1px;
+    }
+
+    header p {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: var(--text-light);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--main-bg);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent-pink);
+    }
+
+    section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-in-out;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section.intro {
+      padding: 6rem 1rem;
+      background-color: var(--gray-light);
+      text-align: center;
+    }
+
+    section.intro h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    section.intro p {
+      font-size: 1rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    section.menu, section.gallery, section.contact {
+      padding: 6rem 1rem;
+      text-align: center;
+    }
+
+    .menu-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .menu-item {
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      width: 200px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .map {
+      margin-top: 2rem;
+      max-width: 100%;
+      height: 400px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    footer {
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      border-top: 1px solid #e0e0e0;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      .menu-items {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#intro">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>1:1 café</h1>
+    <p>일:일 카페. rooted in Seoul, brewed in Zürich.</p>
+  </header>
+
+  <section id="intro" class="intro">
+    <div class="container">
+      <h2>Modern Coffee Culture</h2>
+      <p>
+        A space where Seoul’s soul meets Zurich’s precision. Minimalist vibes,
+        curated brews, and a touch of pink. Slow down and enjoy 1:1 moments.
+      </p>
+    </div>
+  </section>
+
+  <section id="menu" class="menu">
+    <div class="container">
+      <h2>Our Menu</h2>
+      <div class="menu-items">
+        <div class="menu-item"><strong>Espresso</strong><br>₩3,500</div>
+        <div class="menu-item"><strong>Latte</strong><br>₩4,500</div>
+        <div class="menu-item"><strong>Matcha</strong><br>₩5,000</div>
+        <div class="menu-item"><strong>Cold Brew</strong><br>₩4,000</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="gallery">
+    <div class="container">
+      <h2>Gallery</h2>
+      <div class="gallery-grid">
+        <img src="https://source.unsplash.com/400x300/?coffee,1" alt="Coffee">
+        <img src="https://source.unsplash.com/400x300/?cafe,2" alt="Cafe Interior">
+        <img src="https://source.unsplash.com/400x300/?latte,3" alt="Latte">
+        <img src="https://source.unsplash.com/400x300/?barista,4" alt="Barista">
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Find Us</h2>
+      <p>Located in Zürich, with roots in Seoul.</p>
+      <div class="map">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2761.884702471365!2d8.541694615851086!3d47.3768869791714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a0f30678ebf%3A0x7d7f1e7dc85b05fc!2sZ%C3%BCrich%2C%20Switzerland!5e0!3m2!1sen!2sch!4v1626865651842!5m2!1sen!2sch" 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 1:1 café. All rights reserved.
+  </footer>
+
+  <script>
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
