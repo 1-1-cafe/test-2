@@ -56,9 +56,25 @@
       letter-spacing: 0.02em;
     }
 
-    h1 span {
+    header h1 span {
       display: inline-block;
-      will-change: transform;
+      animation: wave 1.5s infinite;
+    }
+    
+    header h1 span:nth-child(1) { animation-delay: 0s; }
+    header h1 span:nth-child(2) { animation-delay: 0.1s; }
+    header h1 span:nth-child(3) { animation-delay: 0.2s; }
+    header h1 span:nth-child(4) { animation-delay: 0.3s; }
+    header h1 span:nth-child(5) { animation-delay: 0.4s; }
+    header h1 span:nth-child(6) { animation-delay: 0.5s; }
+    header h1 span:nth-child(7) { animation-delay: 0.6s; }
+    header h1 span:nth-child(8) { animation-delay: 0.7s; }
+    header h1 span:nth-child(9) { animation-delay: 0.8s; }
+    header h1 span:nth-child(10) { animation-delay: 0.9s; }
+    
+    @keyframes wave {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     header p {
@@ -180,7 +196,10 @@
   </nav>
 
   <header>
-    <h1>1:1 Zurich</h1>
+    <h1>
+      <span>1</span><span>:</span><span>1</span><span>&nbsp;</span>
+      <span>z</span><span>u</span><span>r</span><span>i</span><span>c</span><span>h</span>
+    </h1>
     <p>일:일 카페. rooted in Seoul, brewed in Zürich.</p>
   </header>
 
