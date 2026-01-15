@@ -244,44 +244,26 @@
     const line2 = document.querySelectorAll('.line2 span');
     const allLetters = [...line1, ...line2];
     
-    const amplitude = 15;      // wave height
-    const duration = 500;      // duration of one letter's wave in ms
+    const amplitude = 20;         // wave height in px
+    const waveLength = 600;       // duration of one full wave across all letters (ms)
+    const letterDelay = 80;       // stagger delay per letter (ms)
     
-    let letterIndex = 0;
+    let startTime = null;
     
-    function waveLetter(i) {
-      if (i >= allLetters.length) {
-        // loop back to the start after the last letter
-        letterIndex = 0;
-        waveLetter(0);
-        return;
-      }
+    function animateWave(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
     
-      const span = allLetters[i];
-      let start = null;
+      allLetters.forEach((span, i) => {
+        // staggered, smooth wave
+        const offset = i * letterDelay;
+        span.style.transform = `translateY(${Math.sin((elapsed - offset) / waveLength * Math.PI * 2) * amplitude}px)`;
+      });
     
-      function animateLetter(timestamp) {
-        if (!start) start = timestamp;
-        const elapsed = timestamp - start;
-        const progress = elapsed / duration;
-    
-        // smooth sine motion
-        const y = Math.sin(progress * Math.PI) * amplitude;
-        span.style.transform = `translateY(${y}px)`;
-    
-        if (elapsed < duration) {
-          requestAnimationFrame(animateLetter);
-        } else {
-          span.style.transform = 'translateY(0px)';
-          waveLetter(i + 1); // next letter starts
-        }
-      }
-    
-      requestAnimationFrame(animateLetter);
+      requestAnimationFrame(animateWave);
     }
     
-    // start the sequential wave
-    waveLetter(letterIndex);
+    requestAnimationFrame(animateWave);
   
     // --- Section fade-in on scroll ---
     const sections = document.querySelectorAll('section');
