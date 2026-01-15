@@ -244,9 +244,9 @@
     const line1 = document.querySelectorAll('.line1 span');
     const line2 = document.querySelectorAll('.line2 span');
     
-    const amplitude = 15; // wave height in px
-    const frequency = 0.002; // speed
-    const delayBetweenLines = 100; // ms
+    const amplitude = 15;       // wave height in px
+    const frequency = 0.0025;   // speed
+    const letterDelay = 150;    // ms delay between letters
     
     let startTime = null;
     
@@ -254,15 +254,15 @@
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
     
-      // line 1 wave
+      // animate line1
       line1.forEach((span, i) => {
-        const offset = i * 100; // stagger letters
+        const offset = i * letterDelay;
         span.style.transform = `translateY(${Math.sin((elapsed + offset) * frequency) * amplitude}px)`;
       });
     
-      // line 2 wave, delayed after line1
+      // animate line2, each letter starts after corresponding letter in line1
       line2.forEach((span, i) => {
-        const offset = i * 100 + delayBetweenLines * line1.length;
+        const offset = i * letterDelay + line1.length * letterDelay; // start after line1 wave
         span.style.transform = `translateY(${Math.sin((elapsed + offset) * frequency) * amplitude}px)`;
       });
     
