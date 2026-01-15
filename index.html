@@ -244,30 +244,32 @@
     const line1 = document.querySelectorAll('.line1 span');
     const line2 = document.querySelectorAll('.line2 span');
     
-    const waveDistance = -15; // px
-    const waveDuration = 200; // ms per letter
+    const amplitude = 15; // wave height in px
+    const frequency = 0.002; // speed
+    const delayBetweenLines = 100; // ms
     
-    function waveLetters(line, delay = 0, callback) {
-      line.forEach((letter, i) => {
-        setTimeout(() => {
-          letter.style.transform = `translateY(${waveDistance}px)`;
-          setTimeout(() => {
-            letter.style.transform = `translateY(0)`;
-            if (i === line.length - 1 && callback) callback();
-          }, waveDuration);
-        }, i * waveDuration + delay);
+    let startTime = null;
+    
+    function animateWave(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+    
+      // line 1 wave
+      line1.forEach((span, i) => {
+        const offset = i * 100; // stagger letters
+        span.style.transform = `translateY(${Math.sin((elapsed + offset) * frequency) * amplitude}px)`;
       });
+    
+      // line 2 wave, delayed after line1
+      line2.forEach((span, i) => {
+        const offset = i * 100 + delayBetweenLines * line1.length;
+        span.style.transform = `translateY(${Math.sin((elapsed + offset) * frequency) * amplitude}px)`;
+      });
+    
+      requestAnimationFrame(animateWave);
     }
     
-    function waveLoop() {
-      waveLetters(line1, 0, () => {
-        waveLetters(line2, 0, () => {
-          setTimeout(waveLoop, 300); // pause before restarting
-        });
-      });
-    }
-    
-    waveLoop();
+    requestAnimationFrame(animateWave);
   
     // --- Section fade-in on scroll ---
     const sections = document.querySelectorAll('section');
