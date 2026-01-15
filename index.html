@@ -242,32 +242,46 @@
     // --- Wave animation ---
     const line1 = document.querySelectorAll('.line1 span');
     const line2 = document.querySelectorAll('.line2 span');
-    
-    const amplitude = 15;      // wave height in px
-    const speed = 0.005;       // overall speed (higher = faster)
-    const letterDelay = 0.15;  // phase delay between letters (fraction of π)
-    
     const allLetters = [...line1, ...line2];
-    const totalLetters = allLetters.length;
     
-    let startTime = null;
+    const amplitude = 15;      // wave height
+    const duration = 500;      // duration of one letter's wave in ms
     
-    function animate(timestamp) {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
+    let letterIndex = 0;
     
-      allLetters.forEach((span, i) => {
-        // phase offset for each letter
-        const phase = i * letterDelay * Math.PI;
-        // sine wave motion
-        const y = Math.sin(elapsed * speed + phase) * amplitude;
+    function waveLetter(i) {
+      if (i >= allLetters.length) {
+        // loop back to the start after the last letter
+        letterIndex = 0;
+        waveLetter(0);
+        return;
+      }
+    
+      const span = allLetters[i];
+      let start = null;
+    
+      function animateLetter(timestamp) {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        const progress = elapsed / duration;
+    
+        // smooth sine motion
+        const y = Math.sin(progress * Math.PI) * amplitude;
         span.style.transform = `translateY(${y}px)`;
-      });
     
-      requestAnimationFrame(animate);
+        if (elapsed < duration) {
+          requestAnimationFrame(animateLetter);
+        } else {
+          span.style.transform = 'translateY(0px)';
+          waveLetter(i + 1); // next letter starts
+        }
+      }
+    
+      requestAnimationFrame(animateLetter);
     }
     
-    requestAnimationFrame(animate);
+    // start the sequential wave
+    waveLetter(letterIndex);
   
     // --- Section fade-in on scroll ---
     const sections = document.querySelectorAll('section');
