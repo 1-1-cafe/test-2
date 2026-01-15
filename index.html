@@ -243,9 +243,9 @@
     const line1 = document.querySelectorAll('.line1 span');
     const line2 = document.querySelectorAll('.line2 span');
     
-    const amplitude = 15;      // wave height in px
-    const speed = 0.0025;      // wave speed
-    const letterDelay = 150;   // delay between letters in ms
+    const amplitude = 15;        // height of wave
+    const durationPerLetter = 200; // ms for each letter to go up and down
+    const fps = 60;
     
     let startTime = null;
     
@@ -253,12 +253,17 @@
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
     
-      const allLetters = [...line1, ...line2]; // combine lines
+      const totalLetters = line1.length + line2.length;
+      const totalDuration = totalLetters * durationPerLetter;
     
-      allLetters.forEach((span, i) => {
-        // stagger each letter sequentially
-        const offset = i * letterDelay;
-        span.style.transform = `translateY(${Math.sin((elapsed + offset) * speed) * amplitude}px)`;
+      [...line1, ...line2].forEach((span, i) => {
+        const letterTime = (elapsed - i * durationPerLetter) % totalDuration;
+        // convert ms to 0..1 progress
+        let progress = letterTime / durationPerLetter;
+        if (progress < 0 || progress > 1) progress = 0;
+        // sine motion for smooth up/down
+        const y = Math.sin(progress * Math.PI) * amplitude;
+        span.style.transform = `translateY(${y}px)`;
       });
     
       requestAnimationFrame(animate);
