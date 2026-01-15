@@ -244,9 +244,9 @@
     const line2 = document.querySelectorAll('.line2 span');
     const allLetters = [...line1, ...line2];
     
-    const amplitude = 20;         // wave height in px
-    const waveLength = 600;       // duration of one full wave across all letters (ms)
-    const letterDelay = 80;       // stagger delay per letter (ms)
+    const amplitude = 20;       // wave height in px
+    const speed = 0.003;        // wave speed (higher = faster)
+    const delay = 100;          // delay between letters in ms
     
     let startTime = null;
     
@@ -255,9 +255,12 @@
       const elapsed = timestamp - startTime;
     
       allLetters.forEach((span, i) => {
-        // staggered, smooth wave
-        const offset = i * letterDelay;
-        span.style.transform = `translateY(${Math.sin((elapsed - offset) / waveLength * Math.PI * 2) * amplitude}px)`;
+        // each letter is delayed relative to previous one
+        const letterDelay = i * delay;
+        // sine wave, smooth, but first letter cannot restart before last has started
+        const t = Math.max(0, elapsed - letterDelay);
+        const y = Math.sin(t * speed * Math.PI * 2) * amplitude;
+        span.style.transform = `translateY(${y}px)`;
       });
     
       requestAnimationFrame(animateWave);
