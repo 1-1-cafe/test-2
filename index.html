@@ -53,7 +53,6 @@
       font-family: 'BattyGirl', sans-serif;
       font-size: 4rem;
       font-weight: normal;
-      letter-spacing: 0.02em;
       text-align: center;
     }
     
@@ -61,25 +60,7 @@
     
     header h1 span {
       display: inline-block;
-      animation: wave 1.5s infinite ease-in-out;
-    }
-    
-    /* --- Top line delays --- */
-    header h1 .top span:nth-child(1) { animation-delay: 0s; }
-    header h1 .top span:nth-child(2) { animation-delay: 0.1s; }
-    header h1 .top span:nth-child(3) { animation-delay: 0.2s; }
-    
-    /* --- Bottom line delays: start after top line --- */
-    header h1 .bottom span:nth-child(1) { animation-delay: 0.3s; }
-    header h1 .bottom span:nth-child(2) { animation-delay: 0.4s; }
-    header h1 .bottom span:nth-child(3) { animation-delay: 0.5s; }
-    header h1 .bottom span:nth-child(4) { animation-delay: 0.6s; }
-    header h1 .bottom span:nth-child(5) { animation-delay: 0.7s; }
-    header h1 .bottom span:nth-child(6) { animation-delay: 0.8s; }
-    
-    @keyframes wave {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      transform: translateY(0);
     }
 
     header p {
@@ -201,12 +182,10 @@
   </nav>
 
   <header>
-    <h1>
-      <!-- Top line -->
+    <h1 id="wave-logo">
       <div class="line top">
         <span>1</span><span>:</span><span>1</span>
       </div>
-      <!-- Bottom line -->
       <div class="line bottom">
         <span>Z</span><span>u</span><span>r</span><span>i</span><span>c</span><span>h</span>
       </div>
@@ -260,12 +239,29 @@
   </footer>
 
   <script>
+    // --- Wave animation ---
+    const letters = document.querySelectorAll('#wave-logo span');
+    const waveDistance = -10; // pixels
+    const duration = 150; // ms per letter
+    let current = 0;
+  
+    function waveStep() {
+      letters.forEach(l => l.style.transform = 'translateY(0)');
+      letters[current].style.transform = `translateY(${waveDistance}px)`;
+      current = (current + 1) % letters.length;
+      setTimeout(waveStep, duration);
+    }
+  
+    waveStep();
+  
+    // --- Section fade-in on scroll ---
     const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
+  
     sections.forEach(section => observer.observe(section));
   </script>
 </body>
