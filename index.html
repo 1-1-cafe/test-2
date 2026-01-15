@@ -242,24 +242,33 @@
     // --- Wave animation ---
     const line1 = document.querySelectorAll('.line1 span');
     const line2 = document.querySelectorAll('.line2 span');
-    const allLetters = [...line1, ...line2];
+    const letters = [...line1, ...line2];
     
     const amplitude = 20;       // wave height in px
-    const speed = 0.003;        // wave speed (higher = faster)
-    const delay = 100;          // delay between letters in ms
+    const waveDuration = 1200;  // duration of wave per letter in ms
+    const letterGap = 150;      // gap between letters starting in ms
     
-    let startTime = null;
+    let letterTimers = letters.map(() => 0); // stores per-letter wave start time
+    let startTime = performance.now();
     
     function animateWave(timestamp) {
-      if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
     
-      allLetters.forEach((span, i) => {
-        // each letter is delayed relative to previous one
-        const letterDelay = i * delay;
-        // sine wave, smooth, but first letter cannot restart before last has started
-        const t = Math.max(0, elapsed - letterDelay);
-        const y = Math.sin(t * speed * Math.PI * 2) * amplitude;
+      letters.forEach((span, i) => {
+        // Each letter starts after previous one, but no hard restriction on finish
+        const letterStart = i * letterGap;
+    
+        // Ensure first letter doesn't restart until last letter has started
+        if (i === 0) {
+          const lastLetterStart = (letters.length - 1) * letterGap;
+          const cycles = Math.floor((elapsed - lastLetterStart) / (letters.length * letterGap));
+          if (cycles > 0) letterTimers[i] = lastLetterStart + cycles * letters.length * letterGap;
+        }
+    
+        const t = Math.max(0, elapsed - letterStart - letterTimers[i]);
+    
+        // wave formula using sine
+        const y = Math.sin((t / waveDuration) * Math.PI) * amplitude;
         span.style.transform = `translateY(${y}px)`;
       });
     
