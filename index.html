@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1:1 café</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
   <style>
-    
+    /* --- FONT --- */
     @font-face {
       font-family: 'BattyGirl';
       src: url('fonts/BattyGirl.woff2') format('woff2'),
@@ -15,7 +17,8 @@
       font-style: normal;
       font-display: swap;
     }
-    
+
+    /* --- ROOT VARIABLES --- */
     :root {
       --main-bg: #ffffff;
       --text-dark: #111;
@@ -24,15 +27,9 @@
       --gray-light: #f4f4f4;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-    }
+    body { font-family: 'Inter', sans-serif; }
 
     .container {
       width: 100%;
@@ -41,6 +38,7 @@
       padding: 2rem 1rem;
     }
 
+    /* --- HEADER --- */
     header {
       display: flex;
       flex-direction: column;
@@ -52,12 +50,12 @@
     }
 
     header h1 {
-      font-family: 'BattyGirl', sans-serif;
+      font-family: 'BattyGirl', sans-serif; /* applique BattyGirl ici */
       font-size: 4rem;
       font-weight: normal;
       letter-spacing: 0.02em;
     }
-    
+
     h1 span {
       display: inline-block;
       will-change: transform;
@@ -69,6 +67,7 @@
       color: var(--text-light);
     }
 
+    /* --- NAV --- */
     nav {
       position: sticky;
       top: 0;
@@ -88,20 +87,15 @@
       transition: color 0.3s;
     }
 
-    nav a:hover {
-      color: var(--accent-pink);
-    }
+    nav a:hover { color: var(--accent-pink); }
 
+    /* --- SECTIONS --- */
     section {
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.6s ease-in-out;
     }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    section.visible { opacity: 1; transform: translateY(0); }
 
     section.intro {
       padding: 6rem 1rem;
@@ -172,16 +166,9 @@
     }
 
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-
-      .menu-items {
-        flex-direction: column;
-        align-items: center;
-      }
+      header h1 { font-size: 2.5rem; }
+      .menu-items { flex-direction: column; align-items: center; }
     }
-
   </style>
 </head>
 <body>
@@ -200,10 +187,7 @@
   <section id="intro" class="intro">
     <div class="container">
       <h2>Modern Coffee Culture</h2>
-      <p>
-        A space where Seoul’s soul meets Zurich’s precision. Minimalist vibes,
-        curated brews, and a touch of pink. Slow down and enjoy 1:1 moments.
-      </p>
+      <p>A space where Seoul’s soul meets Zurich’s precision. Minimalist vibes, curated brews, and a touch of pink. Slow down and enjoy 1:1 moments.</p>
     </div>
   </section>
 
@@ -236,13 +220,7 @@
       <h2>Find Us</h2>
       <p>Located in Zürich, with roots in Seoul.</p>
       <div class="map">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2761.884702471365!2d8.541694615851086!3d47.3768869791714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a0f30678ebf%3A0x7d7f1e7dc85b05fc!2sZ%C3%BCrich%2C%20Switzerland!5e0!3m2!1sen!2sch!4v1626865651842!5m2!1sen!2sch" 
-          width="100%" 
-          height="100%" 
-          style="border:0;" 
-          allowfullscreen="" 
-          loading="lazy"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2761.884702471365!2d8.541694615851086!3d47.3768869791714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a0f30678ebf%3A0x7d7f1e7dc85b05fc!2sZ%C3%BCrich%2C%20Switzerland!5e0!3m2!1sen!2sch!4v1626865651842!5m2!1sen!2sch" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </div>
   </section>
@@ -255,17 +233,10 @@
     const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }, {
-      threshold: 0.1
-    });
-
-    sections.forEach(section => {
-      observer.observe(section);
-    });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
   </script>
 </body>
 </html>
