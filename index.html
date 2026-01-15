@@ -244,15 +244,9 @@
     const line1 = document.querySelectorAll('.line1 span');
     const line2 = document.querySelectorAll('.line2 span');
     
-<<<<<<< HEAD
     const amplitude = 15;      // wave height in px
     const speed = 0.0025;      // wave speed
     const letterDelay = 150;   // delay between letters in ms
-=======
-    const amplitude = 15; // wave height in px
-    const frequency = 0.002; // speed
-    const delayBetweenLines = 100; // ms
->>>>>>> parent of d56f5fd (Update index.html)
     
     let startTime = null;
     
@@ -260,7 +254,6 @@
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
     
-<<<<<<< HEAD
       const allLetters = [...line1, ...line2]; // combine lines
     
       allLetters.forEach((span, i) => {
@@ -270,21 +263,6 @@
       });
     
       requestAnimationFrame(animate);
-=======
-      // line 1 wave
-      line1.forEach((span, i) => {
-        const offset = i * 100; // stagger letters
-        span.style.transform = `translateY(${Math.sin((elapsed + offset) * frequency) * amplitude}px)`;
-      });
-    
-      // line 2 wave, delayed after line1
-      line2.forEach((span, i) => {
-        const offset = i * 100 + delayBetweenLines * line1.length;
-        span.style.transform = `translateY(${Math.sin((elapsed + offset) * frequency) * amplitude}px)`;
-      });
-    
-      requestAnimationFrame(animateWave);
->>>>>>> parent of d56f5fd (Update index.html)
     }
     
     requestAnimationFrame(animate);
